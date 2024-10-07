@@ -22,6 +22,12 @@ FROM nginx:alpine
 # Copy the built Angular app from the builder stage to Nginx's web root
 COPY --from=builder /app/dist/my-angular-app /usr/share/nginx/html
 
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Create a new configuration file
+COPY nginx.conf /etc/nginx/conf.d/custom.conf
+
 # Expose port 80
 EXPOSE 80
 
